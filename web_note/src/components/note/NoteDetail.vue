@@ -6,16 +6,23 @@
 		</el-col>
 
 		<el-col :span="noteCol">
-			<div style="text-align: initial">
+			<div>
 				<el-card class="box-card note" v-model="note">
 					<div slot="header" class="clearfix">
+						<el-button style="float: left; padding: 3px 0" type="text" @click="goHistory">
+							<i class="el-icon-back"></i>
+						</el-button>
 						<span>{{ note.name }}</span>
-						<el-button style="float: right; padding: 3px 0" type="text" @click="bookmarkSwitch">
-							<i class="el-icon-tickets"></i>
-						</el-button>
-						<el-button style="float: right; padding: 3px 0" type="text" @click="editNote(note.id)">
-							<i class="el-icon-edit"></i>
-						</el-button>
+						<el-tooltip content="目录" placement="top">
+							<el-button style="float: right; padding: 3px 0; margin-left: 10px" type="text" @click="bookmarkSwitch">
+								<i class="el-icon-tickets"></i>
+							</el-button>
+						</el-tooltip>
+						<el-tooltip content="编辑笔记" placement="top">
+							<el-button style="float: right; padding: 3px 0" type="text" @click="editNote(note.id)">
+								<i class="el-icon-edit"></i>
+							</el-button>
+						</el-tooltip>
 					</div>
 					<el-scrollbar style="height: 100%">
 						<div v-html="note.contentHtml" class="note-html markdown-body" @click="quoteNote"></div>
@@ -29,7 +36,7 @@
 				<el-card class="box-card note" v-model="note">
 					<div slot="header" class="clearfix">
 						<span>{{ quote.name }}</span>
-						<el-button style="float: right; padding: 3px 0" type="text" @click="closeQuote()">
+						<el-button style="float: right; padding: 3px 0; margin-left: 10px" type="text" @click="closeQuote()">
 							<i class="el-icon-close"></i>
 						</el-button>
 						<el-button style="float: right; padding: 3px 0" type="text" @click="editNote(note.id)">
@@ -138,6 +145,18 @@
                 this.bookmarkStatus = !this.bookmarkStatus;
             },
 
+            goHistory() {
+                console.log(this.note.category.id);
+                var _this = this;
+                this.$router.push({
+                    path: '/bookshelf',
+                    name: 'Bookshelf',
+                    params: {
+                        currentCid: this.note.category.id,
+                    },
+                })
+            },
+
             editNote(id) {
                 this.$router.push({
                     path: '/note/edit',
@@ -179,7 +198,6 @@
                     if (this.quoteStatus === true && noteId === this.quote.id.toString()) {
                         this.quoteLink = titleId;
                     } else {
-                        console.log("axios");
                         this.axios.get('/note/' + noteId)
                             .then(function (response) {
                                 if (response.status === 200) {
@@ -243,11 +261,11 @@
 		height: 100vh;
 	}
 	.note-detail .note {
-		width: 90%;
-		text-align: left;
+		width: 95%;
 		margin: auto;
 	}
 	.note-detail .note-html{
 		height: 450px;
+		text-align: left;
 	}
 </style>

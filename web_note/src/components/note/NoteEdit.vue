@@ -2,6 +2,9 @@
 	<div class="note-edit">
 		<el-card class="box-card note" v-model="note" style="width: 100%">
 			<div slot="header" class="clearfix">
+				<el-button style="float: left; padding: 3px 0" type="text" @click="goHistory">
+					<i class="el-icon-back"></i>
+				</el-button>
 				<span>{{ note.name }}</span>
 				<el-button style="float: right; padding: 3px 0" type="text" @click="readNote">
 					<i class="el-icon-more"></i>
@@ -115,6 +118,18 @@
                     })
 		    },
 
+            goHistory() {
+	            console.log(this.note.category.id);
+	            var _this = this;
+	            this.$router.push({
+		            path: '/bookshelf',
+		            name: 'Bookshelf',
+		            params: {
+		                currentCid: this.note.category.id,
+                    },
+	            })
+            },
+
 		    readNote() {
 			    this.$router.push({
                     path: '/note/detail',
@@ -199,13 +214,13 @@
                     }, 500);
                     clipboard.destroy();
                 })
-		    }
+		    },
 	    }
     }
 </script>
 
-<style>
-	.note-edit .el-card__body{
+<style scoped>
+	.note-edit /deep/ .el-card__body{
 		padding: 0 !important;
 	}
 </style>

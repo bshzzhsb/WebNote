@@ -10,6 +10,7 @@ import VueAxios from 'vue-axios'
 import store from "./store";
 import mavonEditor from "mavon-editor"
 import 'mavon-editor/dist/css/index.css'
+import el from "element-ui/src/locale/lang/el";
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
@@ -19,6 +20,21 @@ axios.defaults.withCredentials = true;
 Vue.use(VueAxios, axios);
 
 Vue.use(mavonEditor);
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requireAuth) {
+        if (store.state.currentUser !== null && store.state.currentUser) {
+            next()
+        } else {
+            next({
+                path: '/login',
+                query: {redirect: to.fullPath}
+            })
+        }
+    } else {
+        next()
+    }
+});
 
 /* eslint-disable no-new */
 new Vue({

@@ -25,7 +25,7 @@ public class UserController {
     UserService userService;
 
     @CrossOrigin
-    @PostMapping("api/register")
+    @PostMapping("/api/register")
     @ResponseBody
     public String Register(@RequestBody User user) {
         String username = user.getUsername();
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PostMapping("api/login")
+    @PostMapping("/api/login")
     @ResponseBody
     public Response login(@RequestBody User user) {
         String username = user.getUsername();
@@ -61,6 +61,15 @@ public class UserController {
         } catch (AuthenticationException e) {
             return new Response(500, "fail", null);
         }
+    }
+
+    @CrossOrigin
+    @GetMapping("/api/logout")
+    @ResponseBody
+    public Response logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return new Response(200, "登出", null);
     }
 
 }

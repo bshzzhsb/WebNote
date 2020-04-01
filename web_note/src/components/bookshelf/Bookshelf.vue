@@ -1,7 +1,9 @@
 <template>
 	<div>
 		<category-bar ref="categoryBar" @categorySelect="getNotes" @getCategory="getCategoryBar"></category-bar>
-		<notes ref="notes" @editInfo="handleEditInfo" @addNote="handleAddNote" @updateInfo="getNotes" @editCategory="handleEditCategory"></notes>
+		<notes ref="notes" @editInfo="handleEditInfo"
+		       @addNote="handleAddNote" @updateInfo="getNotes"
+		       @editCategory="handleEditCategory" @deleteCategory="handleDeleteCategory"></notes>
 		<note-edit-form ref="noteEditForm" @updateInfo="getNotes"></note-edit-form>
 	</div>
 </template>
@@ -53,7 +55,10 @@
             },
 		    handleEditCategory() {
                 this.$refs.categoryBar.edit();
-		    }
+		    },
+            handleDeleteCategory() {
+                this.$refs.categoryBar.deleteCategory();
+            },
 	    }
     }
 </script>

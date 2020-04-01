@@ -69,6 +69,9 @@
 		font-size: 11px;
 		text-decoration: none;
 	}
+	.title-index{
+		display: block;
+	}
 	.title-index:hover{
 		font-size: 12px
 	}

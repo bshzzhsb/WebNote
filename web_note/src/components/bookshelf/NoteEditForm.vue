@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<el-dialog title="编辑笔记本标题、简介" :visible.sync="dialogFormVisible" :before-close="handleClose">
+		<el-dialog title="编辑笔记本标题、简介"
+		           :visible.sync="dialogFormVisible"
+		           :before-close="handleClose">
 			<el-form :model="form">
 				<el-form-item label="笔记名称" :label-width="formLabelWidth">
 					<el-input v-model="form.name" autocomplete="off"></el-input>

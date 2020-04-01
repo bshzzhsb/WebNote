@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Register from "../components/Register";
 import Login from "../components/Login";
 import Home from "../components/home/Home";
@@ -12,11 +11,15 @@ import NoteDetail from "../components/note/NoteDetail";
 Vue.use(Router);
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
             path: '/register',
             name: 'Register',
-            component: Register
+            component: Register,
+            meta: {
+                requireAuth: true,
+            },
         },
         {
             path: '/login',
@@ -32,22 +35,31 @@ export default new Router({
                 {
                     path: '/home',
                     name: 'Home',
-                    component: Home
+                    component: Home,
                 },
                 {
                     path: '/bookshelf',
                     name: 'Bookshelf',
-                    component: Bookshelf
+                    component: Bookshelf,
+                    meta: {
+                        requireAuth: true,
+                    },
                 },
                 {
                     path: '/note/edit',
                     name: 'NoteEdit',
-                    component: NoteEdit
+                    component: NoteEdit,
+                    meta: {
+                        requireAuth: true,
+                    },
                 },
                 {
                     path: '/note/detail',
                     name: 'NoteDetail',
-                    component: NoteDetail
+                    component: NoteDetail,
+                    meta: {
+                        requireAuth: true,
+                    },
                 },
             ]
         },

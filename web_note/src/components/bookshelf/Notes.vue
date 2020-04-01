@@ -1,11 +1,13 @@
 <template>
 	<div style="text-align: left;">
-		<el-card v-for="(item,i) in notes" :key="i" class="box-card" shadow="hover" style="width: 30%; display: inline-block; margin-right: 1em">
+		<el-row :gutter="20" style="margin: 0;">
+		<el-col v-for="(item,i) in notes" :key="i" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+		<el-card class="box-card" shadow="hover" style="width:100%; margin-bottom: 1em">
 			<div slot="header" class="clearfix">
 				<span>{{item.name}}</span>
-				<el-tooltip class="item" content="查看笔记内容" placement="top">
-					<el-button style="float: right; padding: 3px 0; margin-left: 10px" type="text" @click="readNote(item.id)">
-						<i class="el-icon-more"></i>
+				<el-tooltip content="删除此笔记" placement="top">
+					<el-button style="float: right; padding: 3px 0; margin-left: 10px" type="text" @click="deleteNote(item.id)">
+						<i class="el-icon-delete"></i>
 					</el-button>
 				</el-tooltip>
 				<el-tooltip content="编辑笔记标题与简介" placement="top">
@@ -13,14 +15,14 @@
 						<i class="el-icon-edit"></i>
 					</el-button>
 				</el-tooltip>
+				<el-tooltip class="item" content="查看笔记内容" placement="top">
+					<el-button style="float: right; padding: 3px 0" type="text" @click="readNote(item.id)">
+						<i class="el-icon-more"></i>
+					</el-button>
+				</el-tooltip>
 				<el-tooltip content="编辑笔记内容" placement="top">
 					<el-button style="float: right; padding: 3px 0" type="text" @click="editNote(item.id)">
 						<i class="el-icon-edit-outline"></i>
-					</el-button>
-				</el-tooltip>
-				<el-tooltip content="删除此笔记" placement="top">
-					<el-button style="float: right; padding: 3px 0" type="text" @click="deleteNote(item.id)">
-						<i class="el-icon-delete"></i>
 					</el-button>
 				</el-tooltip>
 			</div>
@@ -28,19 +30,26 @@
 				{{restrict(item.abs)}}
 			</div>
 		</el-card>
+		</el-col>
 
-		<el-card class="box-card" shadow="hover" style="display: inline-block;">
-			<div slot="header" class="clearfix">
-				<span>新增笔记本</span>
-				<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-			</div>
-			<div class="text item" style="text-align: center;" @click="addNote">
-				<i class="el-icon-plus"></i>
-			</div>
-		</el-card>
+			<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+			<el-card class="box-card" shadow="hover" style="width: 100%">
+				<div slot="header" class="clearfix">
+					<span>新增笔记本</span>
+					<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+				</div>
+				<div class="text item" style="text-align: center;" @click="addNote">
+					<i class="el-icon-plus"></i>
+				</div>
+			</el-card>
+			</el-col>
+		</el-row>
 
-		<el-row style="position: fixed;bottom: 10px; right: 10px">
+		<el-row style="position: fixed;bottom: 60px; right: 10px">
 			<el-button type="primary" icon="el-icon-edit" circle @click="editCategory"></el-button>
+		</el-row>
+		<el-row style="position: fixed;bottom: 10px; right: 10px">
+			<el-button type="danger" icon="el-icon-delete" circle @click="deleteCategory"></el-button>
 		</el-row>
 	</div>
 </template>
@@ -55,10 +64,10 @@
 	    },
 	    methods: {
             restrict(abs) {
-                if (abs.length < 48) {
+                if (abs.length < 24) {
                     return abs;
                 } else {
-                    return abs.substring(0,48) + '...';
+                    return abs.substring(0,24) + '...';
                 }
             },
             editInfo(note) {
@@ -115,10 +124,15 @@
 		    editCategory() {
                 this.$emit('editCategory');
 		    },
+            deleteCategory() {
+                this.$emit('deleteCategory');
+            },
 	    }
     }
 </script>
 
 <style scoped>
-
+	.el-card /deep/ .el-card__body{
+		height: 50px;
+	}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-dialog title="编辑笔记本分类" :visible.sync="dialogFormVisible">
+		<el-dialog :title="formFlag" :visible.sync="dialogFormVisible">
 			<el-form :model="form">
 				<el-form-item label="分类名称" :label-width="formLabelWidth">
 					<el-input v-model="form.name" autocomplete="off"></el-input>
@@ -19,6 +19,7 @@
         name: "CategoryEditForm",
 	    data() {
             return {
+                formFlag: '',
 	            isCreate: false,
 	            dialogFormVisible: false,
 	            formLabelWidth: '120px',
